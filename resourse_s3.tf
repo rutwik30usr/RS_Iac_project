@@ -7,7 +7,6 @@ resource "aws_s3_bucket" "Rg-rutwik" {
   tags = {
     name        = "my_bucket"
     envirnoment = "test"
-    region      = "ap-south-1"
   }
 
 }
