@@ -1,11 +1,11 @@
 #this is our main vpc
 resource "aws_vpc" "Rs-main" {
-  cidr_block       = "10.100.0.0/24"
+  cidr_block       = var.vpc_cidr_block
   instance_tenancy = "default"
 
   tags = {
-    name       = "rs-main"
-    created_by = "Rutwik"
+    name       = "rs-${var.identifier}-main"
+    created_by = var.created_by
   }
 
 }
@@ -13,24 +13,24 @@ resource "aws_vpc" "Rs-main" {
 #vpc public subnet in AZ ap-south-1a
 resource "aws_subnet" "rs_public" {
   vpc_id            = aws_vpc.Rs-main.id
-  cidr_block        = "10.100.0.0/26"
-  availability_zone = "ap-south-1a"
+  cidr_block        = var.public_subnet_cidr
+  availability_zone = var.public_subnet_az
 
   tags = {
-    name       = "public subnet"
-    created_by = "Rutwik"
+    name       = "public-${var.identifier}-subnet"
+    created_by = var.created_by
   }
 }
 
 #vpc private subnet in AZ ap-south-1a
 resource "aws_subnet" "rs_private" {
   vpc_id            = aws_vpc.Rs-main.id
-  cidr_block        = "10.100.1.0/26"
-  availability_zone = "ap-south-1a"
+  cidr_block        = var.private_subnet_cidr
+  availability_zone = var.private_subnet_az
 
   tags = {
-    name       = "private subnet"
-    created_by = "Rutwik"
+    name       = "private-${var.identifier}-subnet"
+    created_by = var.created_by
   }
 
 }
@@ -39,12 +39,12 @@ resource "aws_subnet" "rs_private" {
 #vpc private subnet in AZ ap-south-1b
 resource "aws_subnet" "rs_public_2" {
   vpc_id            = aws_vpc.Rs-main.id
-  cidr_block        = "10.100.2.0/26"
-  availability_zone = "ap-south-1b"
+  cidr_block        = var.public_subnet_cidr_2
+  availability_zone = var.public_subnet_az
 
   tags = {
-    name       = "public subnet-2"
-    created_by = "Rutwik"
+    name       = "public-${var.identifier}- subnet-2"
+    created_by = var.created_by
   }
 }
 
@@ -52,12 +52,12 @@ resource "aws_subnet" "rs_public_2" {
 
 resource "aws_subnet" "rs_private_2" {
   vpc_id            = aws_vpc.Rs-main.id
-  cidr_block        = "10.100.2.0/26"
-  availability_zone = "ap-south-1b"
+  cidr_block        = var.private_subnet_cidr_2
+  availability_zone = var.private_subnet_az
 
   tags = {
-    name       = "private subnet-2"
-    created_by = "Rutwik"
+    name       = "private -${var.identifier}-subnet-2"
+    created_by = var.created_by
   }
 
 }
@@ -78,8 +78,8 @@ resource "aws_route_table" "rs-public-rt" {
   }
 
   tags = {
-    name       = "public route table"
-    created_by = "Rutwik"
+    name       = "public-${var.identifier}-route table"
+    created_by = var.created_by
   }
 
 }
@@ -89,8 +89,8 @@ resource "aws_route_table" "rs-private-rt" {
 
 
   tags = {
-    name       = "private route table"
-    created_by = "Rutwik"
+    name       = "private -${var.identifier}-route table"
+    created_by = var.created_by
   }
 
 }
